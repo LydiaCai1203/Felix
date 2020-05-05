@@ -1,20 +1,33 @@
 # 路由配置
 from functools import wraps
 
-from tornado.routing import Router
+# from tornado.routing import Router
+from tornado.web import Application
 
 
 RESOURCES = {}
 
-class BaseRouter(Router):
 
-    def __init__(self, app):
-        self.app = app
+class BaseApplication(Application):
+
+    def __init__(
+        self, 
+        handlers=None, 
+        default_host=None, 
+        transforms=None, 
+        **settings
+    ):
+        super().__init__(
+            handlers=handlers, 
+            default_host=default_host, 
+            transforms=transforms, 
+            **settings
+        )
 
     def find_handler(self, request, **kwargs):
         """将 path 对应到 request_handler 上
         """
-        return self.app.get_handler_delegate(
+        return self.get_handler_delegate(
             request, 
             RESOURCES[request.path]
         )

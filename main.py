@@ -4,13 +4,13 @@ Tornado Web 应用程序通常组成：一个或多个 RequestHandler 子类，�
 个 Server 的情况，两种结构各自的优缺点又是什么。
 """
 from tornado.ioloop import IOLoop
-from tornado.web import Application, HTTPServer
+from tornado.web import HTTPServer
 
-from app.route import BaseRouter
+from app.route import BaseApplication
 from app.handler.example.example import ExampleHandler
 
 
-router = BaseRouter(Application())
+router = BaseApplication()
 
 if __name__ == "__main__":
     server = HTTPServer(router)
