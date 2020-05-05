@@ -1,5 +1,5 @@
 <div align="center">
-<img src="statics/logo.jpg" alt="Mark Text" width="100" height="100">
+<img src="static/logo.jpeg" alt="Mark Text" width="100" height="100">
 <h1 align="center">MEDUSA</h1>
 </div>
 

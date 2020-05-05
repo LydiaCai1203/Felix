@@ -28,7 +28,6 @@ class BaseHandler(RequestHandler):
     def on_finish(self):
         """响应返回给用户以后调用
         """
-        self.application.log_request(self)
         return super().on_finish()
 
     def write_json(self, data: Any, **kwargs):
