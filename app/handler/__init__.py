@@ -16,7 +16,7 @@ class BaseHandler(RequestHandler):
             参考文档：
             https://tornado-zh.readthedocs.io/zh/latest/guide/structure.html
             < example >:
-            (r'/api/v1/example', ExampleHandler, dict(middleware=BaseMiddleWare()))
+            (r"/api/v1/example", ExampleHandler, dict(middleware=BaseMiddleWare()))
         """
         pass
 
@@ -40,9 +40,9 @@ class BaseHandler(RequestHandler):
         """
         STATUS_SUCCESS = 200
         return self.write({
-            'code': kwargs.get('code', STATUS_SUCCESS),
-            'data': data,
-            'msg': kwargs.get('msg', ''),
+            "code": kwargs.get("code", STATUS_SUCCESS),
+            "data": data,
+            "msg": kwargs.get("msg", ""),
         })
 
     def write_error(self, status_code: int, **kwargs):
@@ -55,10 +55,10 @@ class BaseHandler(RequestHandler):
             https://tornado-zh.readthedocs.io/zh/latest/guide/structure.html
             < #错误处理 >
         """
-        STATUS_SERVER_ERROR = 500
+        STATUS_INTERNAL_ERROR = 500
         try:        
-            if 'exc_info' in kwargs:
-                exc_type, exc_value, exc_traceback = kwargs['exc_info']
+            if "exc_info" in kwargs:
+                exc_type, exc_value, exc_traceback = kwargs["exc_info"]
                 msg_list = traceback.format_exception(
                     exc_type, 
                     exc_value, 
@@ -67,16 +67,16 @@ class BaseHandler(RequestHandler):
                 print(repr(msg_list))
                 msg = str(exc_value)
             else:
-                msg = kwargs.get('msg', '')
+                msg = kwargs.get("msg", "")
                 self.set_status(status_code)
         except:
             msg = traceback.format_exc()
-            self.set_status(STATUS_SERVER_ERROR)
+            self.set_status(STATUS_INTERNAL_ERROR)
 
         return self.write({
-            'code': status_code,
-            'msg': msg,
-            'data': ''
+            "code": status_code,
+            "msg": msg,
+            "data": ""
         })
         
     def on_connection_close(self):

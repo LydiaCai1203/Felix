@@ -8,7 +8,7 @@ class BadRequestError(HTTPError):
     def __init__(
         self, 
         status_code=400, 
-        log_message='Bad Request', 
+        log_message="Bad Request", 
         *args, 
         **kwargs
     ):
@@ -26,7 +26,7 @@ class ForbideenError(HTTPError):
     def __init__(
         self, 
         status_code=403, 
-        log_message='Forbideen', 
+        log_message="Forbideen", 
         *args, 
         **kwargs
     ):
@@ -44,7 +44,7 @@ class UnauthorizedError(HTTPError):
     def __init__(
         self, 
         status_code=401, 
-        log_message='Unauthorized', 
+        log_message="Unauthorized", 
         *args, 
         **kwargs
     ):
@@ -62,7 +62,7 @@ class InternalError(HTTPError):
     def __init__(
         self, 
         status_code=500, 
-        log_message='Internal Error', 
+        log_message="Internal Error", 
         *args, 
         **kwargs
     ):
