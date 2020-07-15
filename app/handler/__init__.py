@@ -21,7 +21,7 @@ class BaseHandler(RequestHandler):
         pass
 
     def prepare(self):
-        """在请求进入处理函数之前被调用
+        """在请求进入处理函数之前被调用，可能产生输出，会在调用 finish 之后在这里结束
         """
         return super().prepare()
 
@@ -45,7 +45,7 @@ class BaseHandler(RequestHandler):
             'msg': kwargs.get('msg', ''),
         })
 
-    def write_error(self, status_code, **kwargs):
+    def write_error(self, status_code: int, **kwargs):
         """添加通用异常处理
 
             write_error 调用 由处理程序中抛异常引起 或 应用程序主动调用
@@ -79,3 +79,10 @@ class BaseHandler(RequestHandler):
             'data': ''
         })
         
+    def on_connection_close(self):
+        """当客户端断开时被调用，应用程序该情况并中断后续处理
+
+            清除和长连接相关的资源，只有当异步处理，连接被关闭才会调用。
+            如果你需要在每个请求之后做处理，用 on_finish 
+        """
+        return super().on_connection_close()
