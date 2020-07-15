@@ -10,7 +10,7 @@
 """
 from functools import wraps
 
-# from tornado.routing import Router
+from tornado.options import options
 from tornado.web import Application
 
 RESOURCES = {}
@@ -22,16 +22,16 @@ class BaseApplication(Application):
     """
 
     def __init__(
-        self, 
-        handlers=None, 
-        default_host=None, 
-        transforms=None, 
+        self,
+        handlers=None,
+        default_host=None,
+        transforms=None,
         **settings
     ):
         super().__init__(
-            handlers=handlers, 
-            default_host=default_host, 
-            transforms=transforms, 
+            handlers=handlers,
+            default_host=default_host,
+            transforms=transforms,
             **settings
         )
 
@@ -41,7 +41,7 @@ class BaseApplication(Application):
             get_handler_delegate 里面的 path_args 将会传到 handler 中
         """
         return self.get_handler_delegate(
-            request, 
+            request,
             RESOURCES[request.path],
         )
 
