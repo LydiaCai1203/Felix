@@ -5,19 +5,26 @@
 """
 from tornado.ioloop import IOLoop
 from tornado.web import HTTPServer
-from tornado.options import options, define
+from tornado.options import options
 from tornado import autoreload
 
-from app.route import BaseApplication
-from app.handler.example.example import ExampleHandler
+# settings 要在使用到 options 之前导入
 from settings import *
+from app.route import BaseApplication
+from app.db import mysql_conn
+from app.model import BaseModel
+from app.handler.example import *
+from app.handler.user import *
+
 
 router = BaseApplication()
+BaseModel.metadata.create_all(mysql_conn, checkfirst=True)
 
 
 if __name__ == "__main__":
 
-    if options.autoreload: autoreload.start()
+    if options.autoreload:
+        autoreload.start()
 
     server = HTTPServer(router)
     server.listen(options.port)
