@@ -13,13 +13,12 @@ from settings import *
 from app.route import BaseApplication
 from app.db import mysql_conn
 from app.model import BaseModel
-from app.handler.example import *
-from app.handler.user import *
+from app.lib.walk_module import walk_modules
 
+walk_modules()
 
 router = BaseApplication()
 BaseModel.metadata.create_all(mysql_conn, checkfirst=True)
-
 
 if __name__ == "__main__":
 
