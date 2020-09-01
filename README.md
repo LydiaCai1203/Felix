@@ -1,10 +1,10 @@
 <div align="center">
 <img src="static/logo.jpeg" alt="Mark Text" width="100" height="100">
-<h1 align="center">MEDUSA</h1>
+<h1 align="center">FELIX</h1>
 </div>
 
 <div align="center">
-  <strong>MEDUSA</strong><br>
+  <strong>FELIX</strong><br>
     Personal Tornado Framework. Framework with log system、<br>
   <sub>babababa baba.</sub>
 </div>
@@ -44,3 +44,5 @@
 7. 启动时自动检查数据表是否存在，不存在就创建
 
 8. 装饰器部分优化一下，不要再每次手动 import handler 了 /importlib/pkgutil
+
+9. 加上优化后的权限系统
