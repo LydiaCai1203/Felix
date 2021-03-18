@@ -41,6 +41,7 @@ class UserLoginHandler(BaseHandler):
             "account": post_args["account"],
             "email": post_args["email"]
         }
+
         server_session = (
             self.server_session
             .save_session(self.request, user_info)
