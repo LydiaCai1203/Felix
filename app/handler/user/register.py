@@ -10,6 +10,7 @@ from app.handler.error import BadRequestError
 from app.model.user.user import UserModel
 from app.db import Session
 
+
 @router.route("/api/v1/users/register")
 class UserRegisterHandler(BaseHandler):
 

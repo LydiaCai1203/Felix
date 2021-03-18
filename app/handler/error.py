@@ -23,6 +23,25 @@ class BadRequestError(HTTPError):
         )
 
 
+class UnauthorizedError(HTTPError):
+    def __init__(
+        self,
+        status_code=401,
+        log_message="Unauthorized",
+        *args,
+        **kwargs
+    ):
+        (
+            super()
+            .__init__(
+                status_code=status_code,
+                log_message=log_message,
+                *args,
+                **kwargs
+            )
+        )
+
+
 class ForbideenError(HTTPError):
     def __init__(
         self,
@@ -42,11 +61,11 @@ class ForbideenError(HTTPError):
         )
 
 
-class UnauthorizedError(HTTPError):
+class NotFoundError(HTTPError):
     def __init__(
         self,
-        status_code=401,
-        log_message="Unauthorized",
+        status_code=404,
+        log_message="NotFound Error",
         *args,
         **kwargs
     ):

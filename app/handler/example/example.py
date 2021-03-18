@@ -1,3 +1,4 @@
+from app.model.example import ExampleModel
 from app.handler import BaseHandler
 from app.route import BaseApplication as router
 from app.handler.auth import check_perm
