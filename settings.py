@@ -27,10 +27,10 @@ define(
 define(
     "mysql",
     default={
-        "host": env.str("MAIN_MYSQL_HOST", "localhost"),
+        "host": env.str("MAIN_MYSQL_HOST", "127.0.0.1"),
         "port": env.int("MAIN_MYSQL_PORT", 3306),
         "user": env.str("MAIN_MYSQL_USER", "root"),
-        "password": env.str("MAIN_MYSQL_PWD", ""),
+        "password": env.str("MAIN_MYSQL_PWD", "root123"),
         "db": env.str('MAIN_MYSQL_DB', "felix_dev"),
         "charset": 'UTF8MB4'
     }
@@ -41,7 +41,7 @@ define(
         "host": env.str("MAIN_REDIS_HOST", "127.0.0.1"),
         "port": env.int("MAIN_REDIS_PORT", 6379),
         # "password": env.str("MAIN_REDIS_PWD", ""),
-        "db": env.str('MAIN_REDIS_DB', "6")
+        "db": env.int('MAIN_REDIS_DB', 6)
     }
 )
 define(
