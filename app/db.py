@@ -10,7 +10,7 @@ from sqlalchemy.engine.base import Engine
 from sqlalchemy.orm import sessionmaker, Session
 
 from app.model.example import ExampleModel
-from app.model.user import UserModel
+from app.model.user import UserModel, PermModel, UserPermModel
 
 
 def get_mysql_conn():
@@ -19,14 +19,14 @@ def get_mysql_conn():
     user = quote(options.mysql['user'])
     password = quote(options.mysql['password'])
     auth = f'{user}:{password}' if password else user
-    
+
     uri = (
         'mysql+pymysql://{auth}@{host}:{port}/{db}'
         '?charset={charset}'
     ).format(auth=auth, **options.mysql)
-    
+
     return create_engine(
-        uri, 
+        uri,
         pool_size=5,
         pool_recycle=3600
     )
@@ -44,7 +44,9 @@ def get_mysql_sess(binds: dict) -> Session:
 mysql_conn = get_mysql_conn()
 Session = get_mysql_sess({
     ExampleModel: mysql_conn,
-    UserModel: mysql_conn
+    UserModel: mysql_conn,
+    PermModel: mysql_conn,
+    UserPermModel: mysql_conn
 })
 
 
