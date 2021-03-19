@@ -1,6 +1,7 @@
+""" 
+    鉴权相关的工具函数放在此处，open-api 的签名校验也可以放在此处
 """
-    authentication tools
-"""
+
 from app.handler.error import ForbideenError
 
 
