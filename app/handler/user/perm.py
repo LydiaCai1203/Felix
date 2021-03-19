@@ -5,7 +5,7 @@ from webargs.tornadoparser import use_args
 from sqlalchemy.sql import or_
 
 from app.handler import BaseHandler
-from app.handler.util import GeneralIntfTools
+from app.handler.utils import GeneralIntfTools
 from app.route import BaseApplication as router
 from app.model.user.user import PermModel
 from app.db import Session
