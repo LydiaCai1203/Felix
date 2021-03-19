@@ -1,4 +1,5 @@
-from app.model.example import ExampleModel
+from tornado import log
+
 from app.handler import BaseHandler
 from app.route import BaseApplication as router
 from app.handler.utils import check_perm
@@ -10,4 +11,6 @@ class ExampleHandler(BaseHandler):
 
     @check_perm(EXAMPLE_READ)
     def get(self):
+        log.access_log.info('access_log')
+        log.app_log.info('app_log')
         return self.write_json(data="Hello world")
