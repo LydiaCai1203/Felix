@@ -1,7 +1,5 @@
 import traceback
 
-from sqlalchemy.log import echo_property
-
 from webargs import fields
 from webargs.tornadoparser import use_args
 from sqlalchemy.sql import or_
@@ -10,8 +8,6 @@ from app.handler import BaseHandler
 from app.handler.utils import GeneralIntfTools
 from app.route import BaseApplication as router
 from app.model.user.user import PermModel
-from app.db import Session
-from app.handler.const import PERM_STATUS_DELETED
 
 
 @router.route("/api/v1/perms")

@@ -6,9 +6,7 @@ from pbkdf2 import crypt
 
 from app.handler import BaseHandler
 from app.route import BaseApplication as router
-from app.handler.error import BadRequestError
 from app.model.user.user import UserModel
-from app.db import Session
 
 
 @router.route("/api/v1/users/register")
