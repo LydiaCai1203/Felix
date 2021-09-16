@@ -1,5 +1,7 @@
 import traceback
 
+from sqlalchemy.log import echo_property
+
 from webargs import fields
 from webargs.tornadoparser import use_args
 from sqlalchemy.sql import or_
@@ -40,7 +42,7 @@ class PermsHandler(BaseHandler, GeneralIntfTools):
             "search_text": fields.Str(required=False, help='搜索字段'),
 
             "order_fields": fields.Str(required=False, missing='id', help='排序字段'),
-            "order_ways": fields.Str(required=False, missing='desc', help='排序方式'),
+            "is_desc": fields.Int(required=False, missing=1, help='排序方式'),
             "page_size": fields.Int(required=False, missing=10, help='页大小'),
             "page_num": fields.Int(required=False, missing=1, help='页码'),
         },
@@ -49,11 +51,6 @@ class PermsHandler(BaseHandler, GeneralIntfTools):
     def get(self, get_args: dict):
         """ check perms
         """
-        order_conds = self.gen_order_conds(
-            get_args.get('order_fields', ''),
-            get_args.get('order_ways', '')
-        )
-
         search_text = get_args.get("search_text", "")
         search_text = search_text.strip(" ")
         expr = (
@@ -64,13 +61,12 @@ class PermsHandler(BaseHandler, GeneralIntfTools):
                     PermModel.name.like(f"{search_text}%")
                 )
             )
-            .order_by(*order_conds)
         )
 
         total = expr.count()
-        page_size = get_args.get('page_size', 10)
-        page_num = get_args.get('page_num', 1)
-        expr = self.add_pagination_conds(expr, page_size, page_num)
+        expr = self.sql_order(expr, get_args["is_desc"], get_args["order_fields"])
+        expr = self.sql_pagination(expr, get_args["page_size"], get_args["page_num"])
+
         data = [
             {'id': i.id, 'key': i.key, 'perm': i.name}
             for i in expr.yield_per(100)
@@ -79,8 +75,8 @@ class PermsHandler(BaseHandler, GeneralIntfTools):
         return self.write_json(
             data={
                 'total': total,
-                'page_size': page_size,
-                'page_num': page_num,
+                'page_size': get_args["page_size"],
+                'page_num': get_args["page_num"],
                 'data': data
             }
         )
