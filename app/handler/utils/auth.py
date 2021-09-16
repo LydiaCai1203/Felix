@@ -22,3 +22,5 @@ def check_perm(perm_name: str):
             return func(*args, **kwargs)
         return inner
     return decorator
+
+

@@ -1,12 +1,7 @@
-"""
-    数据库连接等基础动作
-"""
 from urllib.parse import quote
 
-import redis
 from tornado.options import options
 from sqlalchemy import create_engine
-from sqlalchemy.engine.base import Engine
 from sqlalchemy.orm import sessionmaker, Session
 
 from app.model.example import ExampleModel
@@ -48,6 +43,3 @@ Session = get_mysql_sess({
     PermModel: mysql_conn,
     UserPermModel: mysql_conn
 })
-
-
-redis_conn = redis.Redis(**options.redis)
