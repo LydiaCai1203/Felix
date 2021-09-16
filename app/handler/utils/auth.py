@@ -14,10 +14,10 @@ def check_perm(perm_name: str):
                 .open_session(req_handler.request)
             )
             user_info = redis_session.user_info
-            perms = user_info.get('perms', [])
+            perms = user_info.get("perms", [])
 
             if perm_name not in perms:
-                raise ForbideenError(log_message='无接口权限')
+                raise ForbideenError(log_message="无接口权限")
 
             return func(*args, **kwargs)
         return inner

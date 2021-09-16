@@ -11,6 +11,6 @@ class ExampleHandler(BaseHandler):
 
     @check_perm(EXAMPLE_READ)
     def get(self):
-        log.access_log.info('access_log')
-        log.app_log.info('app_log')
+        log.access_log.info("access_log")
+        log.app_log.info("app_log")
         return self.write_json(data="Hello world")

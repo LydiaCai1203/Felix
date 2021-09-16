@@ -15,8 +15,8 @@ class PermsHandler(BaseHandler, GeneralIntfTools):
 
     @use_args(
         {
-            "key": fields.Str(required=True, help='perm key'),
-            "name": fields.Str(required=True, help='perm show name'),
+            "key": fields.Str(required=True, help="perm key"),
+            "name": fields.Str(required=True, help="perm show name"),
         },
         location="json"
     )
@@ -35,12 +35,12 @@ class PermsHandler(BaseHandler, GeneralIntfTools):
 
     @use_args(
         {
-            "search_text": fields.Str(required=False, help='搜索字段'),
+            "search_text": fields.Str(required=False, help="搜索字段"),
 
-            "order_fields": fields.Str(required=False, missing='id', help='排序字段'),
-            "is_desc": fields.Int(required=False, missing=1, help='排序方式'),
-            "page_size": fields.Int(required=False, missing=10, help='页大小'),
-            "page_num": fields.Int(required=False, missing=1, help='页码'),
+            "order_fields": fields.Str(required=False, missing="id", help="排序字段"),
+            "is_desc": fields.Int(required=False, missing=1, help="排序方式"),
+            "page_size": fields.Int(required=False, missing=10, help="页大小"),
+            "page_num": fields.Int(required=False, missing=1, help="页码"),
         },
         location="query"
     )
@@ -64,16 +64,16 @@ class PermsHandler(BaseHandler, GeneralIntfTools):
         expr = self.sql_pagination(expr, get_args["page_size"], get_args["page_num"])
 
         data = [
-            {'id': i.id, 'key': i.key, 'perm': i.name}
+            {"id": i.id, "key": i.key, "perm": i.name}
             for i in expr.yield_per(100)
         ]
 
         return self.write_json(
             data={
-                'total': total,
-                'page_size': get_args["page_size"],
-                'page_num': get_args["page_num"],
-                'data': data
+                "total": total,
+                "page_size": get_args["page_size"],
+                "page_num": get_args["page_num"],
+                "data": data
             }
         )
 
@@ -86,16 +86,16 @@ class PermsDetailHandler(BaseHandler):
             self.sess.query(PermModel.id).filter(PermModel.id == str(pid)).delete()
             self.sess.commit()
         except Exception:
-            exc_msg = __import__('traceback').format_exc()
+            exc_msg = __import__("traceback").format_exc()
             self.sess.rollback()
-            return self.write_error(status_code=500, msg=f'delete perm failed: {exc_msg}')
+            return self.write_error(status_code=500, msg=f"delete perm failed: {exc_msg}")
         else:
-            return self.write_json(status=200, msg='delete perm successfully')
+            return self.write_json(status=200, msg="delete perm successfully")
 
     @use_args(
         {
-            "key": fields.Str(required=False, help='perm key'),
-            "name": fields.Str(required=False, help='perm name'),
+            "key": fields.Str(required=False, help="perm key"),
+            "name": fields.Str(required=False, help="perm name"),
         },
         location="json"
     )
@@ -103,10 +103,10 @@ class PermsDetailHandler(BaseHandler):
 
         patch_body = dict()
 
-        if 'key' in patch_args and patch_args['key']:
-            patch_body.update({PermModel.key: patch_args['key']})
-        if 'name' in patch_args and patch_args['name']:
-            patch_body.update({PermModel.name: patch_args['name']})
+        if "key" in patch_args and patch_args["key"]:
+            patch_body.update({PermModel.key: patch_args["key"]})
+        if "name" in patch_args and patch_args["name"]:
+            patch_body.update({PermModel.name: patch_args["name"]})
 
         try:
             (
@@ -116,8 +116,8 @@ class PermsDetailHandler(BaseHandler):
             )
             self.sess.commit()
         except Exception:
-            exc_msg = __import__('traceback').format_exc()
+            exc_msg = __import__("traceback").format_exc()
             self.sess.rollback()
-            return self.write_json(status=500, msg=f'patch perm failed: {exc_msg}')
+            return self.write_json(status=500, msg=f"patch perm failed: {exc_msg}")
         else:
-            return self.write_json(status=200, msg='patch perm successfully')
+            return self.write_json(status=200, msg="patch perm successfully")

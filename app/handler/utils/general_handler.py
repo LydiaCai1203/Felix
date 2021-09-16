@@ -19,10 +19,9 @@ class GeneralIntfTools:
         return expr.order_by(
             *[
                 order_func(order_field) 
-                for order_field in order_fields.split(',')
+                for order_field in order_fields.split(",")
             ]
         )
-
 
     def sql_pagination(self, expr: Query, page_size: int, page_num: int) -> Query:
         """ 获取分页条件

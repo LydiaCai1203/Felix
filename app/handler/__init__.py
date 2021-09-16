@@ -21,7 +21,7 @@ from app.db import Session
 class BaseSession:
     """ Base session for server-side sessions.
     """
-    def __init__(self, sid: str = ''):
+    def __init__(self, sid: str = ""):
         self.sid = sid
 
     def open_session(self, request: HTTPServerRequest):
@@ -46,14 +46,14 @@ class RedisSession(BaseSession):
     def __init__(
         self,
         redis_conf: dict = {},
-        sid: str = '',
+        sid: str = "",
         **kwargs
     ):
         sid = (
-            f'{options.session_prefix}{str(uuid4())}'
+            f"{options.session_prefix}{str(uuid4())}"
             if not sid else
             (
-                f'{options.session_prefix}{sid}'
+                f"{options.session_prefix}{sid}"
                 if not sid.startswith(options.session_prefix) else
                 sid
             )

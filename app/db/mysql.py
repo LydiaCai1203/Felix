@@ -6,19 +6,21 @@ from sqlalchemy.orm import sessionmaker, Session
 
 from app.model.example import ExampleModel
 from app.model.user import UserModel, PermModel, UserPermModel
+from settings import MYSQL_CONF
 
 
 def get_mysql_conn():
     """建立 MySQL 连接
     """
-    user = quote(options.mysql['user'])
-    password = quote(options.mysql['password'])
-    auth = f'{user}:{password}' if password else user
+    mysql = MYSQL_CONF["localhost"]
+    user = quote(mysql["user"])
+    password = quote(mysql["password"])
+    auth = f"{user}:{password}" if password else user
 
     uri = (
-        'mysql+pymysql://{auth}@{host}:{port}/{db}'
-        '?charset={charset}'
-    ).format(auth=auth, **options.mysql)
+        "mysql+pymysql://{auth}@{host}:{port}/{db}"
+        "?charset={charset}"
+    ).format(auth=auth, **mysql)
 
     return create_engine(
         uri,
