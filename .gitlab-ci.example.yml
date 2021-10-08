@@ -1,0 +1,69 @@
+image: docker:latest
+
+stages:
+  - build
+  - deploy-dev
+  - deploy-prod
+  - cleanup
+
+build:
+  stage: build
+  script:
+    - if [ "$(docker ps -a | grep felix_$CI_COMMIT_REF_NAME)" ]; then
+    - docker stop felix_$CI_COMMIT_REF_NAME && docker rm felix_$CI_COMMIT_REF_NAME
+    - fi
+    - if [ "$(docker images | grep notification_api:$CI_COMMIT_REF_NAME)" ]; then
+    - docker rmi notification_api:$CI_COMMIT_REF_NAME
+    - fi
+    - docker build -t notification_api:$CI_COMMIT_REF_NAME .
+  only:
+    - master
+    - dev
+  tags:
+    - soc-group
+
+deploy-dev:
+  stage: deploy-dev
+  script:
+    - docker run 
+      -p 8007:8009
+      -d
+      --name=felix_$CI_COMMIT_REF_NAME
+      --restart=always
+      -m 150M
+      --memory-swap=200M
+      -e MYSQL_DB=$MYSQL_DB_DEV
+      notification_api:$CI_COMMIT_REF_NAME
+  only:
+    - dev
+  tags:
+    - soc-group
+
+deploy-prod:
+  stage: deploy-prod
+  script:
+    - docker run 
+      -p 8006:8009
+      -d
+      --name=felix_$CI_COMMIT_REF_NAME
+      --restart=always
+      -m 250M
+      --memory-swap=300M
+      -e MYSQL_DB=$MYSQL_DB_PROD
+      notification_api:$CI_COMMIT_REF_NAME
+  only:
+    - master
+  tags:
+    - soc-group
+
+cleanup:
+  stage: cleanup
+  script:
+    - echo y | docker container prune -f
+    - echo y | docker image prune -f
+  when: on_success
+  only:
+    - dev
+    - master
+  tags:
+    - soc-group
