@@ -6,7 +6,6 @@ from typing import Tuple
 
 import requests
 
-from app.handler.utils import RobotMsgService
 from settings import ROBOT_DING_CONF, ROBOT_GROUP
 from app.handler.consts import ( 
     ROBOT_SECURITY_SIGN,
