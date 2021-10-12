@@ -17,16 +17,11 @@ def get_mysql_conn():
     password = quote(mysql["password"])
     auth = f"{user}:{password}" if password else user
 
-    uri = (
-        "mysql+pymysql://{auth}@{host}:{port}/{db}"
-        "?charset={charset}"
-    ).format(auth=auth, **mysql)
-
-    return create_engine(
-        uri,
-        pool_size=5,
-        pool_recycle=3600
+    uri = ("mysql+pymysql://{auth}@{host}:{port}/{db}" "?charset={charset}").format(
+        auth=auth, **mysql
     )
+
+    return create_engine(uri, pool_size=5, pool_recycle=3600)
 
 
 def get_mysql_sess(binds: dict) -> Session:
@@ -39,9 +34,11 @@ def get_mysql_sess(binds: dict) -> Session:
 
 # 获取 session 实例
 mysql_conn = get_mysql_conn()
-Session = get_mysql_sess({
-    ExampleModel: mysql_conn,
-    UserModel: mysql_conn,
-    PermModel: mysql_conn,
-    UserPermModel: mysql_conn
-})
+Session = get_mysql_sess(
+    {
+        ExampleModel: mysql_conn,
+        UserModel: mysql_conn,
+        PermModel: mysql_conn,
+        UserPermModel: mysql_conn,
+    }
+)

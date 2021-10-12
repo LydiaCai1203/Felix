@@ -6,6 +6,7 @@ from kafka import KafkaConsumer
 from kafka.consumer.fetcher import ConsumerRecord
 
 from app.handler.utils import local_robot
+from settings import KAFKA_LOCAL_TOPIC, KAFKA_GROUP_ID, KAFKA_BASE_CONFIG
 
 
 class Kafka(object):
@@ -21,11 +22,11 @@ class Kafka(object):
             for msg in self.consumer:
                 try:
                     decoded_msg = self._deal_msg(msg)
+                    # 数据过滤部分按需修改
                     for table_name_mod, method in method_mapping.items():
                         table_name, mod = table_name_mod.split(",")
-                        if (
-                            decoded_msg["table"] != table_name
-                            or (mod != "NONE" and mod in decoded_msg["type"] != mod)
+                        if decoded_msg["table"] != table_name or (
+                            mod != "NONE" and mod in decoded_msg["type"] != mod
                         ):
                             continue
 
@@ -62,3 +63,15 @@ class Kafka(object):
 
     def stop(self):
         self.consumer.close()
+
+
+# 使用方式，按需修改
+# def deal_sth(): pass
+# KAFKA_CONF = {
+#     'bootstrap_servers': KAFKA_BASE_CONFIG['localhost']['bootstrap_servers'],
+#     'auto_offset_reset': 'latest',
+#     'enable_auto_commit': True,
+#     'group_id': KAFKA_GROUP_ID
+# }
+# table_mapping = {f'TEST_TABLE_NAME,INSERT': deal_sth}
+# Kafka(base_config=KAFKA_CONF, topics=[KAFKA_TOPIC]).run(table_mapping)
