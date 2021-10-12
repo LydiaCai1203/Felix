@@ -40,8 +40,8 @@ REDIS_CONF = {
 KAFKA_BASE_CONFIG = {
     "localhost": {"bootstrap_servers": [env.str("KAFKA_LOCAL_HOST", "")]}
 }
-KAFKA_LOCAL_TOPIC = env.str("KAFKA_LOCAL_TOPIC")
-KAFKA_LOCAL_GROUP_ID = env.str("KAFKA_LOCAL_GROUP_ID")
+KAFKA_LOCAL_TOPIC = env.str("KAFKA_LOCAL_TOPIC", "")
+KAFKA_LOCAL_GROUP_ID = env.str("KAFKA_LOCAL_GROUP_ID", "")
 
 
 # ES

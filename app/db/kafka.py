@@ -6,7 +6,7 @@ from kafka import KafkaConsumer
 from kafka.consumer.fetcher import ConsumerRecord
 
 from app.handler.utils import local_robot
-from settings import KAFKA_LOCAL_TOPIC, KAFKA_GROUP_ID, KAFKA_BASE_CONFIG
+from settings import KAFKA_LOCAL_TOPIC, KAFKA_LOCAL_GROUP_ID, KAFKA_BASE_CONFIG
 
 
 class Kafka(object):
